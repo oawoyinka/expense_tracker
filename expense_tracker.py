@@ -8,14 +8,14 @@ except FileNotFoundError:
 
 while True:
     print("Welcome to expense tracker!")
-    print("---------------------------")
+    print("-"*27)
     print("1. Add expense")
     print("2. View expenses")
     print("3. Total expenses")
     print("4. Spending by category")
     print("5. Delete expense")
     print("6. Exit")
-    print("---------------------------")
+    print("-"*27)
     choice = input("Pick an option: ")
 
     if choice == "1":
@@ -23,7 +23,7 @@ while True:
         amount = float(amount)
         category = input("Enter category: ")
         description = input("Enter description: ")
-        print("---------------------------")
+        print("-"*27)
         print("Expense added successfully!")
     
 
@@ -80,6 +80,18 @@ while True:
     elif choice == "5":
         if not expenses:
             print("No expenses recorded yet")
+        else:
+            for index, expense in enumerate(expenses, start=2):
+                print(f"{index}. Amount: {expense['amount']} | Category: {expense['category']} | Description: {expense['description']}")
+            try:
+                 to_delete = int(input("Enter number to delete: "))
+                 del expenses[to_delete - 1]
+                 with open("output.json", "w") as json_file:
+                     json.dump(expenses, json_file, indent=4)
+                     print("Selected expense deleted.")
+            except (ValueError, IndexError):
+                print("Invalid selection.")
+                
 
     else:
         print("Invalid option, choose between 1-6.")
