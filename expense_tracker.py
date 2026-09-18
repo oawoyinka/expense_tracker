@@ -7,6 +7,7 @@ except FileNotFoundError:
     expenses = []
 
 while True:
+    print("-"*27)
     print("Welcome to expense tracker!")
     print("-"*27)
     print("1. Add expense")
@@ -25,19 +26,18 @@ while True:
         description = input("Enter description: ")
         print("-"*27)
         print("Expense added successfully!")
-    
+        print("-"*27)
 
         new_entry = {
             "amount": amount,
             "category": category,
             "description": description
         }
-
+        
         expenses.append(new_entry)
 
         with open("output.json", "w") as json_file:
             json.dump(expenses, json_file, indent=4)
-        break
 
     elif choice == "6":
         print("Thank you, see you another time!")
@@ -53,14 +53,14 @@ while True:
                 category = expense["category"]
                 description = expense["description"]
                 print(f"Amount: {amount} | Category: {category} | Description: {description}")
-            break
+                print("-"*53)
 
     elif choice == "3":
         total = 0
         for expense in expenses:
             total += expense["amount"]
         print(f"Total spending: {total}")
-        break
+        print("-"*27)
     elif choice == "4":
         if not expenses:
             print("No expenses recorded yet")
@@ -76,12 +76,12 @@ while True:
                     category_total[category] = amount
             for category, total in category_total.items():
                 print(f"{category}: {total}")
-            break
+
     elif choice == "5":
         if not expenses:
             print("No expenses recorded yet")
         else:
-            for index, expense in enumerate(expenses, start=2):
+            for index, expense in enumerate(expenses, start=1):
                 print(f"{index}. Amount: {expense['amount']} | Category: {expense['category']} | Description: {expense['description']}")
             try:
                  to_delete = int(input("Enter number to delete: "))
@@ -90,8 +90,7 @@ while True:
                      json.dump(expenses, json_file, indent=4)
                      print("Selected expense deleted.")
             except (ValueError, IndexError):
-                print("Invalid selection.")
-                
+                print("Invalid selection.")    
 
     else:
         print("Invalid option, choose between 1-6.")
