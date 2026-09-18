@@ -90,6 +90,7 @@ while True:
                      json.dump(expenses, json_file, indent=4)
                      print("Selected expense deleted.")
             except (ValueError, IndexError):
+                print("-"*27)
                 print("Invalid selection.")    
 
     else:
